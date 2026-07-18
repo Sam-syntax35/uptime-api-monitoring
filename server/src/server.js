@@ -117,22 +117,29 @@ app.use(errorHandler)
 /**
  * Initialize database connections and start the server
  */
+/**
+ * Initialize database connections and start the server
+ */
 async function initializeConnection() {
     try {
         logger.info("Initializing database connections...");
 
-        // Connect to MongoDB;
+        logger.info("Connecting to MongoDB...");
         await mongodb.connect();
+        logger.info("✅ MongoDB connected");
 
-        // Connect to PG;
+        logger.info("Connecting to PostgreSQL...");
         await postgres.testConnection();
+        logger.info("✅ PostgreSQL connected");
 
-        // Connect to RabbitMQ;
+        logger.info("Connecting to RabbitMQ...");
         await rabbitmq.connect();
+        logger.info("✅ RabbitMQ connected");
 
-        logger.info("All connections established successfully");
+        logger.info("✅ All connections established successfully");
     } catch (error) {
-        logger.error("Failed to initialize connections:", error);
+        logger.error("❌ Failed to initialize connections", error);
+        console.error(error); // Important: Render always shows this
         throw error;
     }
 }
