@@ -11,7 +11,7 @@ class PostgresConnection {
 
     getPool() {
         if (!this.pool) {
-           this.pool = new Pool({
+     this.pool = new Pool({
     host: config.postgres.host,
     port: config.postgres.port,
     database: config.postgres.database,
@@ -25,8 +25,7 @@ class PostgresConnection {
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
-});
-
+})
             this.pool.on("error", err => {
                 logger.error("Unexpected error on idle PG client", err)
             })
