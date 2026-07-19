@@ -41,12 +41,12 @@ export class ProcessorService {
 
             // STEP 1: save data to MongoDB
             // Yeh succeed hoga ya fir pura operation fail hoga
-            await this.apiHitRepository.save(eventData)
-            rawEventSaved = true;
+            await this.apiHitRepository.save(eventData);
+rawEventSaved = true;
 
-            logger.info('Raw event saved to MongoD:', {
-                eventId: eventData.eventId
-            });
+logger.info("✅ STEP 1: MongoDB save completed", {
+    eventId: eventData.eventId
+});
 
             // STEP 2: PG Main data upsert karege;
             // Agar ye fail ho gaya, to ham pure operation ko fail nhi karege!
