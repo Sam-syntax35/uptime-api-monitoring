@@ -65,7 +65,10 @@ export class MetricsRepository extends BaseRepository {
                 timeBucket,
             ])
         } catch (error) {
-            this.logger.error('Error upserting endpoint metrics:', error);
+            this.logger.error("Error upserting endpoint metrics", {
+    message: error.message,
+    stack: error.stack,
+});
             throw error;
         }
     };

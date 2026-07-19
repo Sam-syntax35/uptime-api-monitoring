@@ -65,10 +65,11 @@ export class ProcessorService {
                 throw error;
             }
 
-            logger.error('Non-critical: Raw event saved but metrics update failed:', {
-                error: error.message,
-                eventId: eventData.eventId,
-            });
+            logger.error("Metrics update failed", {
+    error: error.message,
+    stack: error.stack,
+    eventId: eventData.eventId,
+});
         }
     }
 
