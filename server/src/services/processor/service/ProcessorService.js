@@ -97,8 +97,13 @@ export class ProcessorService {
                 eventId: eventData.eventId,
             });
         } catch (error) {
-            throw error;
-        }
+    logger.error("Metrics update failed", {
+        message: error.message,
+        stack: error.stack,
+    });
+
+    throw error;
+}
     }
 
     async cleanupOldEvents(daysToKeeep = 30) {

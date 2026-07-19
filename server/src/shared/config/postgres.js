@@ -49,20 +49,36 @@ class PostgresConnection {
         }
     }
 
-    async query(text, params) {
-        const pool = this.getPool()
-        const start = Date.now();
-        try {
-            const result = await pool.query(text, params);
-            const duration = Date.now() - start
-            logger.debug('Executed query', { text, duration, rows: result.rowCount });
-            return result;
+    async query(queryConfig, params) {
+    const pool = this.getPool();
+    const start = Date.now();
+
+    try {
+        let result;
+
+        if (typeof queryConfig === "string") {
+            result = await pool.query(queryConfig, params);
+        } else {
+            result = await pool.query(queryConfig);
         }
-        catch (error) {
-            logger.error('Query error:', { text, error: error.message });
-            throw error;
-        }
+
+        const duration = Date.now() - start;
+
+        logger.debug("Executed query", {
+            duration,
+            rows: result.rowCount,
+        });
+
+        return result;
+    } catch (error) {
+        logger.error("Query error:", {
+            error: error.message,
+            query: queryConfig,
+        });
+
+        throw error;
     }
+}
 
     async close() {
         if (this.pool) {
